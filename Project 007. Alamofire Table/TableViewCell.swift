@@ -1,49 +1,58 @@
 
 import UIKit
+import SnapKit
 
 class TableViewCell: UITableViewCell {
     
     // MARK: - UI Elements & Oulets
     
-    private lazy var characterImage: UIImageView = {
+    private lazy var cardImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    private lazy var name: UILabel = {
+    private lazy var cardName: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
     }()
     
-    private lazy var role: UILabel = {
+    private lazy var cardRarity: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 25)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
     }()
-
     
-    var character: Character? {
+    var card: Card? {
         didSet {
-            role.text = character?.role
-            name.text = character?.name
+            cardName.text = card?.name
+            cardRarity.text = card?.rarity
             
-            guard let imagePath = character?.imageURL,
-                  let imageURL = URL(string: imagePath),
-                  let imageData = try? Data(contentsOf: imageURL)
-            else {
-                characterImage.image = UIImage(named: "square-image")
+            guard let imagePath = card?.imageURL,
+                  let imageURL = URL(string: imagePath) else {
+                cardImage.image = UIImage(named: "placeholder")
                 return
             }
-            characterImage.image = UIImage(data: imageData)
+            
+            URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    DispatchQueue.main.async {
+                        self.cardImage.image = UIImage(named: "placeholder")
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.cardImage.image = UIImage(data: data)
+                }
+            }.resume()
         }
     }
     
@@ -51,7 +60,7 @@ class TableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
+        setupViewsHierarchy()
         setupLayout()
     }
     
@@ -59,45 +68,29 @@ class TableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        addSubview(characterImage)
-        addSubview(name)
-        addSubview(role)
+    private func setupViewsHierarchy() {
+        addSubview(cardImage)
+        addSubview(cardName)
+        addSubview(cardRarity)
     }
     
     private func setupLayout() {
-        characterImage.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.width.height.equalTo(40)
+        cardImage.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-10)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(80)
         }
         
-        name.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
+        cardName.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(10)
+            make.trailing.equalTo(cardImage.snp.leading).offset(-10)
         }
         
-        role.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.top.equalTo(name).offset(30)
+        cardRarity.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.top.equalTo(cardName.snp.bottom).offset(15)
+            make.trailing.equalTo(cardImage.snp.leading).offset(-10)
         }
     }
-    
-    func configure(with character: Character) {
-            name.text = character.name
-            role.text = character.role
-            
-            guard let imageURL = URL(string: character.imageURL) else {
-                characterImage.image = UIImage(named: "square-image")
-                return
-            }
-            
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: imageURL) {
-                    DispatchQueue.main.async {
-                        self.characterImage.image = UIImage(data: imageData)
-                    }
-                }
-            }
-        }
 }
