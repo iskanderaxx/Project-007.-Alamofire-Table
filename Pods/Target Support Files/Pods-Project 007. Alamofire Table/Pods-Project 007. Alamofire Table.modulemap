@@ -1,0 +1,6 @@
+framework module Pods_Project_007__Alamofire_Table {
+  umbrella header "Pods-Project 007. Alamofire Table-umbrella.h"
+
+  export *
+  module * { export * }
+}
