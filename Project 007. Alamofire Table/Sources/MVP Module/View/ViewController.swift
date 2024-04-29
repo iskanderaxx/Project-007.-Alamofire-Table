@@ -1,12 +1,18 @@
 
 import UIKit
-import Alamofire
 
-final class ViewController: UIViewController {
+// MARK: - Protocols
+
+protocol CardsViewProtocol: AnyObject {
+    func reloadData()
+    func showCardDetail(_ card: Card)
+}
+
+final class ViewController: UIViewController, CardsViewProtocol {
     
-    // MARK: - UI Elements & Oulets
+    // MARK: - Data
     
-    var cards: [Card] = []
+    var presenter: CardsPresenterProtocol?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -24,7 +30,9 @@ final class ViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         setupViewsHierarchy()
         setupLayout()
-        fetchCards()
+        
+        presenter = CardsPresenter(view: self)
+        presenter?.viewDidLoad()
     }
     
     // MARK: - Setup & Layout
@@ -33,21 +41,19 @@ final class ViewController: UIViewController {
         view.addSubview(tableView)
     }
     
-    private func setupLayout() {
-        tableView.snp.makeConstraints { make in
+    private func setupLayout() { tableView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
     }
     
-    private func fetchCards() {
-        let request = AF.request("https://api.magicthegathering.io/v1/cards")
-        request.responseDecodable(of: Cards.self) { (data) in
-            guard let versionOne = data.value else { return }
-            let cards = versionOne.cards
-            self.cards = cards
-            
-            self.tableView.reloadData()
-        }
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
+    func showCardDetail(_ card: Card) {
+        let viewController = DetailViewController()
+        viewController.card = card
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -55,13 +61,12 @@ final class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cards.count
+        return presenter?.numberOfRows() ?? 20
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "indentifier", for: indexPath) as! TableViewCell
-        let cardForRow = cards[indexPath.row]
-        cell.card = cardForRow
+        presenter?.configure(cell: cell, forRow: indexPath.row)
         return cell
     }
 }
@@ -72,10 +77,7 @@ extension ViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = DetailViewController()
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewController.card = cards[indexPath.row]
-        navigationController?.pushViewController(viewController, animated: true)
+        presenter?.didSelectRow(at: indexPath)
     }
 }
 

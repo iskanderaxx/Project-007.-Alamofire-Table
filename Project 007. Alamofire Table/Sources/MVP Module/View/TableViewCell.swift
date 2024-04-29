@@ -31,6 +31,8 @@ final class TableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Data
+    
     var card: Card? {
         didSet {
             cardName.text = card?.name

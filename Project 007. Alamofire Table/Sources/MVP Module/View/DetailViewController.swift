@@ -4,9 +4,9 @@ import SnapKit
 
 final class DetailViewController: UIViewController {
     
-    // MARK: - UI Elements & Oulets
-    
     var card: Card?
+    
+    // MARK: - UI Elements & Oulets
     
     public var chosenCardImage: UIImageView = {
         let imageView = UIImageView()
