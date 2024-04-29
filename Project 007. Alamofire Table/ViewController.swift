@@ -20,7 +20,7 @@ final class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         title = "Cards (Version 1)"
         navigationController?.navigationBar.prefersLargeTitles = true
         setupViewsHierarchy()
@@ -70,6 +70,13 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = DetailViewController()
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewController.card = cards[indexPath.row]
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
