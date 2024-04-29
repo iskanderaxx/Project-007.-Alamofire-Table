@@ -2,7 +2,7 @@
 import UIKit
 import SnapKit
 
-class TableViewCell: UITableViewCell {
+final class TableViewCell: UITableViewCell {
     
     // MARK: - UI Elements & Oulets
     
@@ -67,6 +67,8 @@ class TableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Setup & Layout
     
     private func setupViewsHierarchy() {
         addSubview(cardImage)

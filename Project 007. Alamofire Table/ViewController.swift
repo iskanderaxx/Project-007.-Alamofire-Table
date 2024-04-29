@@ -2,7 +2,7 @@
 import UIKit
 import Alamofire
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     // MARK: - UI Elements & Oulets
     
@@ -16,6 +16,8 @@ class ViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -25,6 +27,8 @@ class ViewController: UIViewController {
         setupLayout()
         fetchCards()
     }
+    
+    // MARK: - Setup & Layout
     
     private func setupViewsHierarchy() {
         view.addSubview(tableView)
@@ -47,6 +51,8 @@ class ViewController: UIViewController {
         }
     }
 }
+
+// MARK: - Extesions
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

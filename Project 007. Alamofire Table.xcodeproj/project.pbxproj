@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C11F0B42BDFEC730048DFD0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C11F0B32BDFEC730048DFD0 /* DetailViewController.swift */; };
 		8C1BED482BD85ABF00776152 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8C1BED472BD85ABF00776152 /* SnapKit */; };
 		8C1BED4A2BD85ABF00776152 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 8C1BED492BD85ABF00776152 /* SnapKit-Dynamic */; };
 		8C1BED4E2BD9704200776152 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1BED4D2BD9704200776152 /* TableViewCell.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		6990F5ABCABACDC91CED5C22 /* Pods-Project 007. Alamofire Table.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 007. Alamofire Table.debug.xcconfig"; path = "Target Support Files/Pods-Project 007. Alamofire Table/Pods-Project 007. Alamofire Table.debug.xcconfig"; sourceTree = "<group>"; };
+		8C11F0B32BDFEC730048DFD0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8C1BED4D2BD9704200776152 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		8C7EB9A42BDFC3D80017DCC2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		8CDD019A2BD569D000D017CE /* Project 007. Alamofire Table.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 007. Alamofire Table.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +87,7 @@
 				8CDD019F2BD569D000D017CE /* SceneDelegate.swift */,
 				8CDD01A12BD569D000D017CE /* ViewController.swift */,
 				8C1BED4D2BD9704200776152 /* TableViewCell.swift */,
+				8C11F0B32BDFEC730048DFD0 /* DetailViewController.swift */,
 				8CDD01A32BD569D000D017CE /* Main.storyboard */,
 				8CDD01A62BD569D200D017CE /* Assets.xcassets */,
 				8CDD01A82BD569D200D017CE /* LaunchScreen.storyboard */,
@@ -227,6 +230,7 @@
 				8C1BED4E2BD9704200776152 /* TableViewCell.swift in Sources */,
 				8CDD01A22BD569D000D017CE /* ViewController.swift in Sources */,
 				8CDD019E2BD569D000D017CE /* AppDelegate.swift in Sources */,
+				8C11F0B42BDFEC730048DFD0 /* DetailViewController.swift in Sources */,
 				8CDD01A02BD569D000D017CE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
